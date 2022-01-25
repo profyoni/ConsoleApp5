@@ -5,8 +5,8 @@
         public static int NumberPrompt()
         {
             Console.WriteLine("Enter a number");
-            String s = Console.ReadLine();
-            return Int32.Parse(s);
+            var s = Console.ReadLine();
+            return Int32.Parse(s??"0");
         }
 
         public static int Add(params int[] list) 
