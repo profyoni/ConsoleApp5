@@ -26,7 +26,7 @@ namespace ClassLib.Test2
 
 
         [TestMethod]
-        public void LanguageTest()
+        public void LanguageTest() 
         {
             // verbatim string @ as prefix ($ prefix string interpolation)
             "http:\\\\www.example.com".Should().Be(@"http:\\www.example.com");
