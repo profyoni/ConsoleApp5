@@ -35,13 +35,13 @@ namespace ClassLib.Test2
 
             float f1 = 0.3333333333f, f2 = 1 / 3.0f;
             const double Delta = 0.00001;
-            Assert.IsTrue( Math.Abs(f1 - f2) < Delta);
-            Assert.AreEqual(f1,f2,Delta);
+            Assert.IsTrue(Math.Abs(f1 - f2) < Delta);
+            Assert.AreEqual(f1, f2, Delta);
 
         }
 
         [TestMethod]
-        public void LanguageTest() 
+        public void LanguageTest()
         {
             // verbatim string @ as prefix ($ prefix string interpolation)
             "http:\\\\www.example.com".Should().Be(@"http:\\www.example.com");
@@ -56,7 +56,7 @@ fox".Should().Contain("\n");
         public void Swap()
         {
             int a = 1, b = 2;
-            Utilities.Swap(ref a,ref b);
+            Utilities.Swap(ref a, ref b);
             a.Should().Be(2);
         }
 
@@ -64,7 +64,7 @@ fox".Should().Contain("\n");
         [TestMethod]
         public void PassOut()
         {
-            int a , b, price=100;
+            int a, b, price = 100;
             Utilities.PassOut(out a, out b);
             a.Should().Be(3);
 
@@ -84,6 +84,53 @@ fox".Should().Contain("\n");
             ret.Item2.Should().Be(5.0);
 
         }
-        
+
+
+        //[TestMethod]
+        //public void TDatetime()
+        //{
+        //    DateTime dt = DateTime.Now;
+        //    dt.Month.Should().Be(2);
+        //    dt.DayOfWeek.Should().Be(DayOfWeek.Monday);
+        //    DateTime dt2 = DateTime.Now.Subtract(TimeSpan.FromHours(2));
+        //    dt2.Hour.Should().Be(16);
+
+        //    ((int)DayOfWeek.Monday).Should().Be(1);
+        //    ((int)DayOfWeek.Sunday).Should().Be(0);
+        //    if (dt < dt2)
+        //    {
+        //        throw new Exception();
+        //    }
+
+        //    var diff = dt - dt2;
+        //    diff.Should().BeCloseTo(TimeSpan.FromHours(2), TimeSpan.FromMilliseconds(109));
+        //      DateTimeOffset
+        //}
+
+        // in Java enums are Not ints, they are final static objects
+        // EFFective C#
+        enum Gender // enums are int under the hood
+        {
+            NotSet = 0,
+            Male = 10,
+            Female = 15
+        } // avoid magic number
+
+        [TestMethod]
+        public void EnumTest()
+        {
+            Gender g = Gender.Male;
+
+            //if (g == Gender.Male)
+            //{
+            //    throw new Exception();
+            //}
+
+            g++;
+            ((int)g).Should().Be(11);
+            (--g).Should().Be(Gender.Male);
+
+            
+        }
     }
 }
