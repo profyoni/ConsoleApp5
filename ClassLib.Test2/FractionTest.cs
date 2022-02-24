@@ -79,16 +79,56 @@ namespace ClassLib.Test2
             (s1 == s2).Should().BeTrue();
         }
 
-        //[TestMethod]
-        //public void DoubleCast()
-        //{
-        //    var f1 = new Fraction(7, 9);
+        void foo(Fraction f)
+        {
 
-        //    double d = (double) f1;
+        }
 
-        //    int x = (int) f1;
+        // lossy conversions required cast - explicit
+        // nonlossy - auto cast - implicit
+        [TestMethod]
+        public void DoubleCast()
+        {
+            var f1 = new Fraction(7, 9);
 
-        //    f1 = 56; // safe
-        //}
+            double d = (double)f1;
+
+            d.Should().BeApproximately(7.0 / 9.0, 0.000001);
+            int x = (int)f1;
+            x.Should().Be(0);
+
+            Fraction f2 = 3;
+            f2.Num.Should().Be(3);
+            f2.Den.Should().Be(1);
+
+            foo(3); // safe
+
+            var f3 = f1 * 6;
+
+            f3.Num.Should().Be(42);
+            f3.Den.Should().Be(9);
+
+            (f3 != 4).Should().BeTrue();
+
+            var q = f1 + f2 * f3;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ZeroDenominator()
+        {
+            new Fraction(1, 0);
+        }
+
+        [TestMethod]
+        [Timeout(500)]
+        public void FluentExceptionTest()
+        {
+            Action act = () => new Fraction(1, 0); ;
+            System.Threading.Thread.Sleep(3);
+            act.Should().Throw<ArgumentException>()
+               // .WithInnerException<IndexOutOfBoundsException>()
+                .WithMessage("Denominator may not be 0");
+        }
     }
 }
